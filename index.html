@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>家长微信对账 · Jigger</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="./app.bundle.js"></script>
+</head>
+<body>
+  <a class="skip" href="#import">直接前往文件导入</a>
+  <header>
+    <div class="bar">
+      <div class="brand"><span class="mark" aria-hidden="true"></span>Jigger</div>
+      <nav style="display:flex; gap:16px; font-size:0.9rem;">
+        <a href="index.html" style="color:#fff; text-decoration:none; padding:4px 8px; border-radius:4px; background:rgba(255,255,255,0.15);">微信对账工作台</a>
+        <a href="anonymize.html" style="color:rgba(255,255,255,0.85); text-decoration:none; padding:4px 8px; border-radius:4px;">隐私脱敏工具</a>
+      </nav>
+      <span class="private"><span aria-hidden="true"></span> 本地对账工作台</span>
+    </div>
+  </header>
+  <main>
+    <div class="intro"><h1>家长微信对账</h1><p>核对在查账户的疑似支出，整理供事后申诉核对的证据清单。</p></div>
+    <div class="workspace">
+      <details id="guide" open>
+        <summary><span class="number">01</span><strong>导出引导</strong><span class="toggle" aria-hidden="true"></span></summary>
+        <div class="guide-body">
+          <button type="button" id="skip-guide">已有文件，直接导入 <span aria-hidden="true">↗</span></button>
+          <h2>什么时候值得导出？</h2>
+          <p>下面任意一种情况，都可以导出看一看。不必凑齐，也不能仅凭这些观察认定发生了消费。</p>
+          <ul class="observations">
+            <li>孩子偷偷拿手机，或放好的手机位置、朝向经常变。</li><li>余额似乎莫名变少。</li><li>孩子出现时神情紧张，然后小心或迅速离开。</li><li>作息突然改变，例如特别晚睡或特别早起。</li><li>家里出现陌生快递或多了东西，问过之后孩子回避。</li>
+          </ul>
+          <p class="note">工具不会根据对账文件判断这些观察是否发生，也不判断每一笔是谁操作的。</p>
+          <h2>如何从微信导出？</h2>
+          <p>仅供账户实名本人或未成年人账户的监护人核对依法可导出的账单。银行卡扣款通常能在手机银行查到，零钱或零钱通扣款则不一定能查到。</p>
+          <ol class="steps">
+            <li><b>进入在查账户的账单</b><p>打开微信「我 → 服务 → 钱包 → 账单」，点右上角「… → 下载账单」。旧版从「常见问题 → 下载账单」进入。</p></li>
+            <li><b>选择「用于个人对账」</b><p>如果可以选交易类型，请选「全部」。建议先选最近 1–3 个月，每次最长可选一年。不要选「用作证明材料」的盖章 PDF。</p></li>
+            <li><b>选择接收方式</b><p>选微信支付公众号：文件可直接打开，没有解压码，7 天内可下载。选邮箱：用微信支付通知或下载记录里的解压码解开压缩包。</p></li>
+            <li><b>实名本人验证，等待文件送达</b><p>如果账户是家长实名、孩子能付款，刷脸的是家长，文件也包含家长自己的日常消费。若账户是未成年人实名，必须由本人完成验证，监护人在场；本人不配合就不能代办。</p><p>按微信提示完成刷脸、姓名身份证或支付密码等验证。本工具不代办或绕过验证。提交后 24 小时内送达。</p></li>
+          </ol>
+          <p class="note">按<a href="https://pay.weixin.qq.com/doc/user/4021834826" target="_blank" rel="noopener noreferrer">微信支付用户手册</a>，个人对账文件包含已删除记录，但不会标出哪几笔被删过。</p>
+        </div>
+      </details>
+      <div class="import-column">
+        <section id="import" tabindex="-1" aria-labelledby="import-title">
+          <div class="section-heading"><span class="number">02</span><h2 id="import-title">导入对账文件</h2></div>
+          <div id="drop-zone">
+            <svg class="file-art" viewBox="0 0 116 94" fill="none" aria-hidden="true"><g stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path fill="#c8ded3" d="m30 21 38-9 15 63-38 9z"/><path fill="#fffdf5" d="M41 10h34l11 12v56l-5-3-5 3-5-3-5 3-5-3-5 3-5-3-5 3-5-3z"/><path d="M74 10v14h12M49 34h26M49 42h18M49 51h14"/><circle cx="83" cy="65" r="13" fill="#e7bb71"/><path d="M83 72V58m-6 6 6-6 6 6"/></g></svg>
+            <h3>拖入微信对账文件</h3><p id="formats">支持 XLSX、CSV，不接受盖章 PDF</p>
+            <label class="picker"><input id="file-input" type="file" accept=".xlsx,.csv" aria-describedby="formats"><span>选择本地文件</span></label>
+          </div>
+          <p class="file-help">一次只分析一份。选择新文件会替换上一份结果。</p>
+          <p id="status" role="status" aria-live="polite" aria-atomic="true">等待选择文件</p>
+          <noscript>请启用 JavaScript，以便在本机分析文件。</noscript>
+        </section>
+        <aside aria-labelledby="coverage-title"><h2 id="coverage-title">规则覆盖</h2><p class="category">游戏充值</p><ul class="terms"><li>4399游戏</li><li>4399游戏支付</li><li>四三九九网络股份有限公司</li><li>miHoYo Games</li><li>米哈游</li></ul><p>目前仅识别以上名称。规则没覆盖到的消费不会出现在清单里。</p></aside>
+        <p class="privacy-note"><strong>账单留在本机</strong><br>无需注册。文件只在当前浏览器内解析，不会上传。</p>
+      </div>
+    </div>
+    <div id="results"></div>
+  </main>
+  <footer><div><strong>Jigger</strong><span>SheetJS Community Edition · <a href="https://sheetjs.com/" rel="noopener noreferrer">https://sheetjs.com/</a> · Copyright (C) 2012-present SheetJS LLC · Apache License 2.0</span></div></footer>
+</body>
+</html>

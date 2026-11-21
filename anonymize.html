@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>微信账单脱敏 · Jigger</title>
+  <link rel="stylesheet" href="styles.css?v=2">
+  <script defer src="./mask-app.bundle.js"></script>
+</head>
+<body class="mask-page">
+  <a class="skip" href="#import">跳到文件选择</a>
+  <header>
+    <div class="bar">
+      <div class="brand"><span class="mark" aria-hidden="true"></span>Jigger</div>
+      <nav class="mask-nav" aria-label="Jigger 工具">
+        <a href="index.html">微信对账</a>
+        <a href="anonymize.html" aria-current="page">账单脱敏</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="intro">
+      <p class="mask-badge">在浏览器内处理 · 不上传账单</p>
+      <h1>微信账单脱敏</h1>
+      <p>选择微信导出的个人对账文件，下载打码后的副本。原文件不会被修改。</p>
+    </section>
+
+    <div class="mask-grid">
+      <div class="mask-flow">
+        <section class="mask-panel" id="import" tabindex="-1" aria-labelledby="drop-heading">
+          <div class="section-heading">
+            <h2 id="drop-heading">1.&nbsp;选择账单</h2>
+          </div>
+          <div id="mask-drop-zone">
+            <svg class="file-art" viewBox="0 0 116 94" fill="none" aria-hidden="true">
+              <g stroke="currentColor" stroke-width="2" stroke-linejoin="round">
+                <path fill="#c8ded3" d="m30 21 38-9 15 63-38 9z"/>
+                <path fill="#fffdf5" d="M41 10h34l11 12v56l-5-3-5 3-5-3-5 3-5-3-5 3-5-3-5 3z"/>
+                <path d="M74 10v14h12M49 34h26M49 42h18M49 51h14"/>
+                <circle cx="83" cy="65" r="13" fill="#e7bb71"/>
+                <path d="M83 72V58m-6 6 6-6 6 6"/>
+              </g>
+            </svg>
+            <h3>把微信个人对账文件拖到这里</h3>
+            <p id="formats">支持 XLSX、CSV，单份不超过 32 MiB</p>
+            <label class="picker">
+              <input id="mask-file-input" type="file" accept=".xlsx,.csv" aria-describedby="formats">
+              <span>选择本地账单</span>
+            </label>
+          </div>
+          <p id="mask-status" role="status" aria-live="polite">等待选择文件</p>
+          <noscript>请启用 JavaScript，以便在浏览器内处理账单。</noscript>
+        </section>
+
+        <section class="mask-panel" id="mask-result-card" hidden aria-labelledby="result-heading">
+          <div class="mask-result-heading">
+            <div>
+              <div class="section-heading"><h2 id="result-heading">2.&nbsp;脱敏副本已生成</h2></div>
+              <p>分享之前，请先打开副本检查是否仍有个人信息。</p>
+            </div>
+            <button id="mask-download-btn" type="button">下载脱敏账单</button>
+          </div>
+          <dl class="mask-stats">
+            <div><dt>处理笔数</dt><dd id="stat-total">0</dd></div>
+            <div><dt>已打码交易单号</dt><dd id="stat-tx">0</dd></div>
+            <div><dt>已处理的表头前信息项</dt><dd id="stat-account">0</dd></div>
+            <div><dt>处理耗时</dt><dd id="stat-time">0ms</dd></div>
+          </dl>
+          <h3 id="mask-preview-heading">预览前 5 笔</h3>
+          <div class="table-scroll" tabindex="0" role="region" aria-labelledby="mask-preview-heading">
+            <table>
+              <thead><tr><th scope="col">交易时间</th><th scope="col">交易对方</th><th scope="col">商品说明</th><th scope="col">金额</th><th scope="col">处理后交易单号</th></tr></thead>
+              <tbody id="mask-preview-body"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <aside class="mask-panel mask-rules" aria-labelledby="rules-heading">
+        <h2 id="rules-heading">哪些信息会变？</h2>
+        <dl>
+          <div><dt>1.&nbsp;账单身份信息打码</dt><dd>按规则处理账单头部的昵称、微信号和姓名。</dd></div>
+          <div><dt>2.&nbsp;替换交易单号和商户单号</dt><dd>同一份账单内，同列相同单号换成相同编号，不同单号换成不同编号。替代编号仅用于核对这份副本，不能用来查询原交易。</dd></div>
+          <div><dt>3.&nbsp;转账和红包对方名称打码</dt><dd>按规则处理转账与红包的对方名称。</dd></div>
+          <div><dt>4.&nbsp;对账所需字段保留</dt><dd>保留交易时间、金额、商品说明和一般商户名称，方便继续核对。</dd></div>
+        </dl>
+        <p class="note"><strong>分享前请复核。</strong>备注、商品说明和精确交易时间仍可能透露个人信息。只处理自己或经授权的账单，不要直接公开副本。</p>
+      </aside>
+    </div>
+  </main>
+
+  <footer><div><strong>Jigger</strong><span>微信账单脱敏 · SheetJS</span></div></footer>
+</body>
+</html>
