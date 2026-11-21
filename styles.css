@@ -7,7 +7,8 @@ header{background:var(--ink);color:white;border-bottom:3px solid var(--gold)}.ba
 @media(max-width:780px){.workspace{grid-template-columns:1fr;gap:14px}.bar{height:52px}.intro{padding-block:22px 18px}.intro p{font-size:.94rem}.guide-body{padding:14px 16px 18px}.section-heading,summary{padding:14px 16px}#drop-zone{margin-inline:14px}.file-help,#status{margin-inline:14px}aside{padding:16px}footer>div{display:block}footer span{display:block;margin-top:8px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 
-.mask-page .bar{gap:12px}
+html{scrollbar-gutter:stable}
+.bar{gap:12px}
 .mask-nav{display:flex;align-items:center;gap:6px}
 .mask-nav a{display:flex;align-items:center;min-height:44px;padding:4px 10px;border-radius:6px;color:#e3eee8;text-decoration:none;white-space:nowrap}
 .mask-nav a:is(:hover,[aria-current=page]){background:#36534c;color:white}
@@ -37,4 +38,4 @@ header{background:var(--ink);color:white;border-bottom:3px solid var(--gold)}.ba
 .mask-stats dd{font-weight:700;font-variant-numeric:tabular-nums}
 #mask-preview-heading{font-size:1rem}
 @media(max-width:760px){.mask-grid{grid-template-columns:minmax(0,1fr);gap:14px}}
-@media(max-width:360px){.mask-page .brand{font-size:21px;gap:8px}.mask-nav a{padding-inline:6px;font-size:.875rem}}
+@media(max-width:360px){.bar .brand{font-size:21px;gap:8px}.mask-nav a{padding-inline:6px;font-size:.875rem}}
